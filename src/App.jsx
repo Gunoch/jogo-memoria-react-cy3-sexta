@@ -10,7 +10,7 @@ function App() {
   const [pares, setPares] = useState(0);
 
   function criarBaralho() {
-    const emojis = ["🐸", "🐱", "🐭", "🐷"];
+    const emojis = ["🐸", "🐱", "🐭", "🐷", "😒","🙉"];
     const baralho = [];
 
     emojis.forEach((emoji, indice) => {
