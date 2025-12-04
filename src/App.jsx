@@ -21,9 +21,10 @@ function App() {
     });
 
     for (let i = baralho.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [baralho[i], baralho[j] = [baralho[j], baralho[i]]]
-    }
+  const j = Math.floor(Math.random() * (i + 1));
+  [baralho[i], baralho[j]] = [baralho[j], baralho[i]];
+  }
+
     return baralho;
   }
 
