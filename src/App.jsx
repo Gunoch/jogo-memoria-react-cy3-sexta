@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 import Tabuleiro from "./components/Tabuleira"
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
   const [primeira, setPrimeira] = useState(null);
   const [segunda, setSegunda] = useState(null);
   const [travado, setTravado] = useState(false);
-  const [jogas, setJogadas] = useState(0);
+  const [jogadas, setJogadas] = useState(0);
   const [pares, setPares] = useState(0);
 
   function criarBaralho() {
@@ -20,7 +20,7 @@ function App() {
       );
     });
 
-    for (let i = criarBaralho.length - 1; i > 0; i--) {
+    for (let i = baralho.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [baralho[i], baralho[j] = [baralho[j], baralho[i]]]
     }
@@ -45,9 +45,9 @@ function App() {
     const cartaAtual = cartas[indice];
     if (cartaAtual.virada || cartaAtual.combinada) return;
 
-    const nocasCartas = cartas.slice();
+    const novasCartas = cartas.slice();
     novasCartas[indice] = { ...cartaAtual, virada: true };
-    setCartas(nocasCartas);
+    setCartas(novasCartas);
 
     if (primeira === null) {
       setPrimeira(indice);
@@ -90,9 +90,25 @@ function App() {
     }
 
   }
-  const tereminou = pares === 4;
+  const terminou = pares === 4;
   return (
-    <div>
+    <div className='app'>
+      <h1 className='tituto'>Jogo da Memória</h1>
+      <p className='subtitulo'>Encontre todos os pares de emojis</p>
+
+      <div className='painel-info'>
+        <span>Jogadas: {jogadas}</span>
+        <button className='botao' onClick={novoJogo}>Reiniciar</button>
+      </div>
+
+      <Tabuleiro cartas={cartas} aoClicarNaCarta={aoClicarNaCarta}/>
+
+      {terminou && (
+        <p className='mensagem-final'>
+          Parabéns! Você encontrou todos os pares em {jogadas} jogadas.
+        </p>
+      )}
+
 
     </div>
   );
