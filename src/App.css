@@ -1,42 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap');
+
+:root {
+  /* Paleta Dark Neon */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); /* Fundo escuro azulado */
+  --glass-bg: rgba(30, 41, 59, 0.7); /* Vidro escuro */
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary-color: #8b5cf6; /* Roxo */
+  --secondary-color: #ec4899; /* Rosa */
+  --success-color: #10b981; /* Verde */
+  --card-back: #334155;     /* Verso da carta (cinza azulado escuro) */
+  --card-front: #040c14;    /* Frente da carta (claro para contraste da imagem) */
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', Arial, sans-serif;
+  background: var(--bg-gradient); /* Corrigido aqui */
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  padding: 16px;
+}
+
+.app {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.titulo {
   text-align: center;
+  margin: 8px;
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-transform: uppercase;
+  letter-spacing: -1px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.subtitulo {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-weight: 300;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.painel-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.botao {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
 }
 
-.card {
-  padding: 2em;
+.botao:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
 }
 
-.read-the-docs {
-  color: #888;
+.botao:active {
+  transform: scale(0.97);
+}
+
+.tabuleiro {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.carta {
+  width: 100%;
+  max-width: 250px;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  background: var(--card-back);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 30px;
+  user-select: none;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, box-shadow 0.3s;
+  padding: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid transparent;
+}
+
+.carta:not(.virada):not(.combinada):hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.carta.virada {
+  background: var(--card-front);
+  color: #1e293b;
+  transform: scale(1.03);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+  z-index: 10;
+}
+
+.carta.combinada {
+  background: var(--success-color);
+  color: rgb(255, 255, 255);
+  cursor: default;
+  opacity: 1;
+  border-color: #34d399;
+  box-shadow: 0 0 12px var(--success-color);
+  animation: pulseSuccess 0.5s ease-out;
+}
+
+.mensagem-final {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--success-color);
+  background: rgba(16, 185, 129, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Estilo específico para as imagens dentro das cartas */
+.carta img {
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+@keyframes pulseSuccess {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
